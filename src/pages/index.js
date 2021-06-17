@@ -15,7 +15,7 @@ export default function Login() {
     <Container>
       <Form
         name="basic"
-        initialValues={{ remember: true }}
+        initialValues={{ username: "", password: "" }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
@@ -50,7 +50,7 @@ export const Container = styled.div`
   flex-flow: column;
   width: 100%;
   height: 100%;
-  padding: 256px;
+  padding: 128px;
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
