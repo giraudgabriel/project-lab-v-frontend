@@ -17,7 +17,7 @@ class CharacterService {
     return await baseApi.post("/character", user);
   }
   async update(id, name) {
-    return await baseApi.put(`/character/${id}&name=${name}`);
+    return await baseApi.put(`/character/${id}?id=${id}&name=${name}`);
   }
 }
 

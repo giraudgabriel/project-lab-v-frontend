@@ -32,7 +32,7 @@ baseAPI.interceptors.response.use(
           alert("❌ Usuário ou senha incorretos!");
           break;
         default:
-          alert(error.response.data.Message);
+          alert("Um erro inesperado aconteceu!");
           break;
       }
     } else {

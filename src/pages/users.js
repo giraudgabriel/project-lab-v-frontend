@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Table, Tag, PageHeader } from "antd";
+import { Table, Tag, PageHeader, Input } from "antd";
 import { hasRole } from "~/hooks/useRole";
 import CharacterService from "~/services/CharacterService";
 import Permission from "~/components/permission";
@@ -11,11 +11,31 @@ export default function Users() {
   const isAdmin = hasRole("admin");
   const isPolice = hasRole("policia");
 
+  const onUpdateUser = async (e, record) => {
+    const name = e.target.value;
+    if (record != null && name != null) {
+      const response = await CharacterService.update(record.id, name);
+      if (response.status == 200) {
+        await getUsers();
+        alert("Usuário salvo com sucesso!");
+      }
+    }
+  };
+
   const mainColumns = [
     {
       title: "Nome",
       dataIndex: "name",
       key: "name",
+      render: (name, record) =>
+        isAdmin ? (
+          <Input
+            defaultValue={name}
+            onPressEnter={(e) => onUpdateUser(e, record)}
+          />
+        ) : (
+          name
+        ),
     },
     {
       title: "Grupos",
@@ -59,9 +79,6 @@ export default function Users() {
       key: "id",
       render: (id) => (
         <Permission roles={["admin"]}>
-          {/* <Tag color="blue" onClick={(onUpdate)}>
-            Alterar
-          </Tag> */}
           <Tag color="red" onClick={(e) => onDelete(e, id)}>
             Apagar
           </Tag>
