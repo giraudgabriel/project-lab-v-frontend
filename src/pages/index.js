@@ -1,14 +1,25 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import CharacterService from "~/services/CharacterService";
+import { setUser } from "~/actions";
 
 export default function Login() {
-  const onFinish = (data) => {
-    console.log(data);
+  const dispatch = useDispatch();
+
+  const onFinish = async (data) => {
+    const response = await CharacterService.login(data);
+    if (response.status == 200) {
+      const user = response.data;
+      dispatch(setUser(user));
+    } else {
+      alert("Usuário ou senha incorretos!");
+    }
   };
 
   const onFinishFailed = (data) => {
-    console.error(data);
+    alert("Preencha os campos!");
   };
 
   return (

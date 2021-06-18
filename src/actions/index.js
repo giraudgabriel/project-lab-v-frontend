@@ -1,5 +1,9 @@
-import { SET_PERMISSION } from "./types";
+import { SET_USER } from "./types";
+import history from "~/history";
 
-export const setPermission = (payload) => (dispatch, _getState) => {
-  dispatch({ type: SET_PERMISSION, payload });
+export const setUser = (payload) => async (dispatch, _getState) => {
+  dispatch({ type: SET_USER, payload });
+  setTimeout(() => {
+    history.push(payload != null ? "/user" : "/");
+  }, 1000);
 };

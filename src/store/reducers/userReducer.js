@@ -1,13 +1,14 @@
-import { SET_PERMISSION } from "~/actions/types";
+import { SET_USER } from "~/actions/types";
 
 const INITIAL_STATE = {
-  permissions: [],
+  roles: [],
+  token: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SET_PERMISSION:
-      return { ...state, permissions: action.payload };
+    case SET_USER:
+      return { ...state, ...action.payload };
     default:
       return state;
   }

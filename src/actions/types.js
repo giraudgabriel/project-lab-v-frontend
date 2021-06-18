@@ -1,1 +1,1 @@
-export const SET_PERMISSION = "SET_PERMISSION";
+export const SET_USER = "SET_USER";

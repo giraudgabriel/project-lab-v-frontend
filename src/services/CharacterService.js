@@ -1,8 +1,11 @@
 import baseApi from "~/service";
 
 class CharacterService {
+  async login(user) {
+    return await baseApi.post("/login", user);
+  }
   async get() {
-    return await baseApi.get("/character");
+    return await baseApi.get("/character/");
   }
   async getAllDto() {
     return await baseApi.get("/character/all");
