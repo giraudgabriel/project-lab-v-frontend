@@ -6,7 +6,7 @@ let baseAPI = axios.create();
 baseAPI.interceptors.request.use(
   function handleRequest(config) {
     const { token } = store.getState().user;
-    config.baseURL = "https://8080-blush-kangaroo-ijfngtxo.ws-us08.gitpod.io/";
+    config.baseURL = "https://8080-gray-angelfish-r7tgf9j7.ws-us09.gitpod.io/";
     if (token) config.headers["Authorization"] = "Bearer " + token;
     return config;
   },

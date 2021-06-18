@@ -4,9 +4,13 @@ import { Table, Tag, PageHeader, Typography } from "antd";
 const { Paragraph } = Typography;
 import { hasRole } from "~/hooks/useRole";
 import CharacterService from "~/services/CharacterService";
+import Permission from "~/components/permission";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
+
+  const isAdmin = hasRole("admin");
+  const isPolice = hasRole("policia");
 
   const columns = [
     {
@@ -22,11 +26,11 @@ export default function Users() {
     {
       title: "Grupos",
       dataIndex: "groups",
-      key: "group",
+      key: "group.code",
       render: (groups) => (
         <span>
           {groups.map((group) => {
-            return <Tag key={group.code}>{group.name}</Tag>;
+            return <Tag key={group.code}>{group.code}</Tag>;
           })}
         </span>
       ),
@@ -34,29 +38,25 @@ export default function Users() {
     {
       title: "Banco",
       dataIndex: "bank",
-      key: "bank",
+      key: "bank.balance",
       render: (bank) => (
-        <span>
+        <Permission roles={["admin"]}>
           <Tag color="green">
             {bank?.balance.toLocaleString("pt-br", {
               style: "currency",
               currency: "BRL",
             })}
           </Tag>
-        </span>
+        </Permission>
       ),
     },
   ];
-
-  const isAdmin = hasRole("admin");
-  const isPolice = hasRole("policia");
 
   const getUsers = async () => {
     let response = {};
     if (isAdmin) response = await CharacterService.get();
     else response = await CharacterService.getAllDto();
     setUsers(response.data);
-    console.log(response.data);
   };
 
   useEffect(() => {

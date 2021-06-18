@@ -1,25 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import { setUser } from "~/actions";
-import { useDispatch } from "react-redux";
-import { hasRole } from "~/hooks/useRole";
+import { useDispatch, useSelector } from "react-redux";
 
 function Menu({ children }) {
   const dispatch = useDispatch();
-
-  const hasMenuItems = hasRole("admin") || hasRole("policia");
+  const user = useSelector((state) => state.user);
 
   const logout = (e) => {
     e.preventDefault();
-    if (window.confirm("Deseja realmente sair?")) dispatch(setUser(undefined));
+    if (window.confirm("Deseja realmente sair?"))
+      dispatch(
+        setUser({
+          username: null,
+          roles: [],
+        })
+      );
   };
 
   return (
     <>
       <Container>
-        <MenuItem>Home</MenuItem>
-        {hasMenuItems && (
+        {user?.username != null && (
           <>
+            <MenuItem>Bem vindo {user?.username}!</MenuItem>
             <MenuItem onClick={logout}>Sair</MenuItem>
           </>
         )}

@@ -9,6 +9,7 @@ const routes = [
   {
     path: "/user",
     component: Users,
+    roles: ["admin", "policia"],
   },
 ];
 
