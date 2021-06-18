@@ -26,10 +26,10 @@ baseAPI.interceptors.response.use(
     if (error && error.response) {
       switch (error.response.status) {
         case 401:
-          alert("Você não possui permissão para acessar.");
+          alert("❌ Você não possui permissão para acessar.");
           break;
         case 403:
-          alert("Usuário ou senha incorretos!");
+          alert("❌ Usuário ou senha incorretos!");
           break;
         default:
           alert(error.response.data.Message);

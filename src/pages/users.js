@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Table, Tag, PageHeader, Typography } from "antd";
-const { Paragraph } = Typography;
+import { Table, Tag, PageHeader } from "antd";
 import { hasRole } from "~/hooks/useRole";
 import CharacterService from "~/services/CharacterService";
 import Permission from "~/components/permission";
@@ -12,12 +11,7 @@ export default function Users() {
   const isAdmin = hasRole("admin");
   const isPolice = hasRole("policia");
 
-  const columns = [
-    {
-      title: "Id",
-      dataIndex: "id",
-      key: "id",
-    },
+  const mainColumns = [
     {
       title: "Nome",
       dataIndex: "name",
@@ -35,6 +29,15 @@ export default function Users() {
         </span>
       ),
     },
+  ];
+
+  const columnsAdmin = [
+    {
+      title: "Id",
+      dataIndex: "id",
+      key: "id",
+    },
+    ...mainColumns,
     {
       title: "Banco",
       dataIndex: "bank",
@@ -50,7 +53,30 @@ export default function Users() {
         </Permission>
       ),
     },
+    {
+      title: "",
+      dataIndex: "id",
+      key: "id",
+      render: (id) => (
+        <Permission roles={["admin"]}>
+          {/* <Tag color="blue" onClick={(onUpdate)}>
+            Alterar
+          </Tag> */}
+          <Tag color="red" onClick={(e) => onDelete(e, id)}>
+            Apagar
+          </Tag>
+        </Permission>
+      ),
+    },
   ];
+
+  const onDelete = async (e, id) => {
+    e.preventDefault();
+    if (isAdmin && window.confirm("Deseja realmente excluir este usuário?")) {
+      await CharacterService.delete(id);
+      await getUsers();
+    }
+  };
 
   const getUsers = async () => {
     let response = {};
@@ -70,9 +96,12 @@ export default function Users() {
   return (
     <Container>
       <PageHeader>
-        <Paragraph>Usuários</Paragraph>
+        <h3>Usuários</h3>
       </PageHeader>
-      <Table dataSource={users} columns={columns} />
+      <Table
+        dataSource={users}
+        columns={isAdmin ? columnsAdmin : mainColumns}
+      />
     </Container>
   );
 }

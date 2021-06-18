@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { setUser } from "~/actions";
 import { useDispatch, useSelector } from "react-redux";
+import history from "~/history";
+import Permission from "../permission";
 
 function Menu({ children }) {
   const dispatch = useDispatch();
@@ -24,6 +26,11 @@ function Menu({ children }) {
         {user?.username != null && (
           <>
             <MenuItem>Bem vindo {user?.username}!</MenuItem>
+            <Permission roles={["admin"]}>
+              <MenuItem onClick={() => history.push("/user")}>
+                Novo Usuário
+              </MenuItem>
+            </Permission>
             <MenuItem onClick={logout}>Sair</MenuItem>
           </>
         )}

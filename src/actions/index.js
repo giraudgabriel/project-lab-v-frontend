@@ -4,6 +4,6 @@ import history from "~/history";
 export const setUser = (payload) => async (dispatch, _getState) => {
   dispatch({ type: SET_USER, payload });
   setTimeout(() => {
-    history.push(payload?.username != null ? "/user" : "/");
+    history.push(payload?.username != null ? "/users" : "/");
   }, 1000);
 };

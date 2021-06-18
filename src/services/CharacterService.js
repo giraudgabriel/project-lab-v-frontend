@@ -11,13 +11,13 @@ class CharacterService {
     return await baseApi.get("/character/all");
   }
   async delete(id) {
-    return await baseApi.delete(`/character?id=${id}`);
+    return await baseApi.delete(`/character/${id}`);
   }
   async add(user) {
     return await baseApi.post("/character", user);
   }
   async update(id, name) {
-    return await baseApi.put(`/character?id=${id}&name=${name}`);
+    return await baseApi.put(`/character/${id}&name=${name}`);
   }
 }
 

@@ -6,11 +6,9 @@ import Menu from "./components/layout/menu";
 import { hasAnyRole, isLoggedIn } from "~/hooks/useRole";
 
 function RouterComponent() {
+  
   const isAuthorized = (roles) => {
-    if (roles) {
-      const response = isLoggedIn() && hasAnyRole(roles);
-      return response;
-    }
+    if (roles) return isLoggedIn() && hasAnyRole(roles);
     return true;
   };
 
